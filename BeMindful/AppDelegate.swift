@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoreGraphics
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -18,17 +19,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusBarItem : NSStatusItem = NSStatusItem()
     var active : Int = 0
     var idleTime : Double = 0.0
+    var lastHour :Double = 0.0
+    var menu: NSMenu = NSMenu()
+    
+    
+    func quitApp(sender: AnyObject) {
+        NSApplication.sharedApplication().terminate(self)
+    }
+    
+    func resetActive(sender: AnyObject) {
+        active = 0
+        lastHour = 0.0
+    }
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        
-        // initially set status bar text
-        statusBarItem = statusBar.statusItemWithLength(-1)
-        statusBarItem.title = "0m"
+        initMenu();
 
-        
         // check idle time every minute
         var idleTimer = NSTimer.scheduledTimerWithTimeInterval(
-            1, // test with 1 sec
+            60,
             target: self,
             selector: Selector("updateIdle"),
             userInfo: nil,
@@ -37,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // count every minute
         var activeTimer = NSTimer.scheduledTimerWithTimeInterval(
-            1.2, // test with 1.2 sec
+            60.2,
             target: self,
             selector: Selector("updateActive"),
             userInfo: nil,
@@ -46,12 +55,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
+    func initMenu() {
+        // initially set status bar text
+        statusBarItem = statusBar.statusItemWithLength(-1)
+        statusBarItem.title = "0m"
+        statusBarItem.menu = menu
+        
+        var menuItemReset : NSMenuItem = NSMenuItem()
+        
+        // Add quit item
+        menuItemReset.title = "Reset"
+        menuItemReset.action = Selector("resetActive:")
+        menuItemReset.keyEquivalent = ""
+        menu.addItem(menuItemReset)
+        
+        var menuItemQuit : NSMenuItem = NSMenuItem()
+        
+        // Add quit item
+        menuItemQuit.title = "Quit"
+        menuItemQuit.action = Selector("quitApp:")
+        menuItemQuit.keyEquivalent = ""
+        menu.addItem(menuItemQuit)
+    }
+    
     /**
      * Determine active time and display it in the status bar
      */
     func updateActive () {
         
-        if idleTime < 5.0 {
+        if idleTime < 5.0 * 60.0 {
             active = active + 1
         }
         
@@ -65,6 +97,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         activeStr += String(activeMin) + "m"
         statusBarItem.title = activeStr
+        
+        // check change in hours
+        if (activeHour != lastHour) {
+            activeHour = lastHour
+            
+            // show notification every active hour
+            var notification:NSUserNotification = NSUserNotification()
+            notification.title = "Be mindful!"
+            notification.subtitle = "You've been active for an hour."
+            var notificationcenter:NSUserNotificationCenter = NSUserNotificationCenter.defaultUserNotificationCenter()
+            notificationcenter.scheduleNotification(notification)
+        }
     }
     
     /**
@@ -81,14 +125,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             idleTime = idleTimeKeyboard
         }
         
-        if idleTime >= 5.0 {
+        if idleTime >= 5.0 * 60.0 {
             active = 0
+            lastHour = 0.0
         }
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
     }
-
-
 }
 
