@@ -21,13 +21,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var idleTime : Double = 0.0
     var lastHour :Double = 0.0
     var menu: NSMenu = NSMenu()
+    var loginHandler: LoginHandler = LoginHandler()
+    var menuItemStartup : NSMenuItem = NSMenuItem()
     
     
     func quitApp(sender: AnyObject) {
         NSApplication.sharedApplication().terminate(self)
     }
     
-    func resetActive(sender: AnyObject) {
+    func resetActive() {
         active = 0
         lastHour = 0.0
     }
@@ -55,6 +57,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
+    func setItemStartupText() {
+        var startOnLogin = loginHandler.applicationIsInStartUpItems()
+        menuItemStartup.title = startOnLogin ? "Don't start on login" : "Start on login"
+    }
+    
+    func toggleLogin() {
+        loginHandler.toggleLaunchAtStartup()
+        setItemStartupText()
+    }
+    
     func initMenu() {
         // initially set status bar text
         statusBarItem = statusBar.statusItemWithLength(-1)
@@ -65,9 +77,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Add quit item
         menuItemReset.title = "Reset"
-        menuItemReset.action = Selector("resetActive:")
+        menuItemReset.action = Selector("resetActive")
         menuItemReset.keyEquivalent = ""
         menu.addItem(menuItemReset)
+        
+        
+        // Add startup item
+        menuItemStartup.action = Selector("toggleLogin")
+        setItemStartupText()
+        menuItemStartup.keyEquivalent = ""
+        menu.addItem(menuItemStartup)
+        
         
         var menuItemQuit : NSMenuItem = NSMenuItem()
         
@@ -83,7 +103,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      */
     func updateActive () {
         
-        if idleTime < 5.0 * 60.0 {
+        // only active when not idle for a minute
+        if idleTime < 60.0 {
             active = active + 1
         }
         
@@ -126,8 +147,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         if idleTime >= 5.0 * 60.0 {
-            active = 0
-            lastHour = 0.0
+            resetActive()
         }
     }
 

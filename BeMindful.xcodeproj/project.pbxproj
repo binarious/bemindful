@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F37BACE81A794F2D00F4EC4E /* LoginHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37BACE71A794F2D00F4EC4E /* LoginHandler.swift */; };
 		F3B836F91A76BAC000A79A16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B836F81A76BAC000A79A16 /* AppDelegate.swift */; };
 		F3B836FB1A76BAC000A79A16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3B836FA1A76BAC000A79A16 /* Images.xcassets */; };
 		F3B836FE1A76BAC000A79A16 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B836FC1A76BAC000A79A16 /* MainMenu.xib */; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F37BACE71A794F2D00F4EC4E /* LoginHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHandler.swift; sourceTree = "<group>"; };
 		F3B836F31A76BAC000A79A16 /* BeMindful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeMindful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3B836F71A76BAC000A79A16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3B836F81A76BAC000A79A16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				F3B836FA1A76BAC000A79A16 /* Images.xcassets */,
 				F3B836FC1A76BAC000A79A16 /* MainMenu.xib */,
 				F3B836F61A76BAC000A79A16 /* Supporting Files */,
+				F37BACE71A794F2D00F4EC4E /* LoginHandler.swift */,
 			);
 			path = BeMindful;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F37BACE81A794F2D00F4EC4E /* LoginHandler.swift in Sources */,
 				F3B836F91A76BAC000A79A16 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +397,7 @@
 				F3B8370F1A76BAC000A79A16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F3B837101A76BAC000A79A16 /* Build configuration list for PBXNativeTarget "BeMindfulTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +406,7 @@
 				F3B837121A76BAC000A79A16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
