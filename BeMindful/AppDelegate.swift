@@ -121,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // check change in hours
         if (activeHour != lastHour) {
-            activeHour = lastHour
+            lastHour = activeHour
             
             // show notification every active hour
             var notification:NSUserNotification = NSUserNotification()
