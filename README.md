@@ -10,4 +10,4 @@ BeMindful places itself in the menubar and shows the time you've been active in 
 
 ## Download
 
-A built version can be found [here](http://binarious.de/BeMindful-v1.0.0.zip).
+A built version can be found [here](http://binarious.de/BeMindful-v1.0.1.zip).
